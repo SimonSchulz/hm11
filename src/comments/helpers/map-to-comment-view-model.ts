@@ -3,8 +3,9 @@ import container from "../../core/container/container";
 import { CommentEntity } from "../dto/comment.entity";
 import { LikesService } from "../../likes/domain/likes.service";
 import { WithId } from "mongodb";
+import TYPES from "../../core/container/types";
 
-const likesService = container.get<LikesService>(LikesService);
+const likesService = container.get<LikesService>(TYPES.LikesService);
 export async function mapToCommentViewModel(
   comment: WithId<CommentEntity>,
   userId: string,
