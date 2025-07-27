@@ -1,7 +1,6 @@
 import { Schema, model } from "mongoose";
-import { CommentDocument } from "../types/comment";
 
-const CommentSchema = new Schema<CommentDocument>({
+const CommentSchema = new Schema({
   content: { type: String, required: true },
   commentatorInfo: {
     userId: { type: String, required: true },
@@ -11,4 +10,4 @@ const CommentSchema = new Schema<CommentDocument>({
   postId: { type: String, required: true },
 });
 
-export const CommentModel = model<CommentDocument>("Comment", CommentSchema);
+export const CommentModel = model("Comment", CommentSchema);

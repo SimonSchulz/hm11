@@ -5,12 +5,12 @@ import { CommentDocument } from "../types/comment";
 import { CommentEntity } from "../dto/comment.entity";
 
 export const commentsRepository = {
-  async findByIdOrFail(id: string): Promise<CommentDocument | null> {
+  async findByIdOrFail(id: string) {
     if (!Types.ObjectId.isValid(id)) return null;
     return CommentModel.findById(id).lean();
   },
 
-  async create(newComment: CommentEntity): Promise<CommentDocument> {
+  async create(newComment: CommentEntity) {
     const createdComment = await CommentModel.create(newComment);
     return createdComment.toObject();
   },
