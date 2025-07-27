@@ -8,7 +8,7 @@ const LikesSchema = new Schema({
     enum: Object.values(LikeStatus),
     required: true,
   },
-  authorId: { type: String, required: true },
+  userId: { type: String, required: true },
   targetId: { type: String, required: true },
 });
 

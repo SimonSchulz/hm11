@@ -17,11 +17,6 @@ export class LikesRepository {
     targetId: string,
     status: LikeStatus,
   ): Promise<void> {
-    if (status === LikeStatus.None) {
-      await LikesModel.deleteOne({ userId, targetId });
-      return;
-    }
-
     await LikesModel.updateOne(
       { userId, targetId },
       {
