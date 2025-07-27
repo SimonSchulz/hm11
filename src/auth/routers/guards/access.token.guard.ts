@@ -15,7 +15,6 @@ export class AccessTokenGuard {
 
   async handle(req: Request, res: Response, next: NextFunction) {
     try {
-      console.log("AccessTokenGuard.handle called");
       const authHeader = req.headers.authorization;
       if (!authHeader) throw new AuthorizationError();
 
@@ -36,7 +35,6 @@ export class AccessTokenGuard {
 
       next();
     } catch (error) {
-      console.log(error);
       next(error);
     }
   }
