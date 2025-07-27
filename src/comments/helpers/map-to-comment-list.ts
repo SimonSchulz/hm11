@@ -8,7 +8,7 @@ export async function mapToCommentListModel(
   comments: WithId<CommentEntity>[],
   totalCount: number,
   query: CommentQueryInput,
-  userId: string,
+  userId?: string,
 ): Promise<PaginatedOutput> {
   const { pageNumber: page, pageSize } = query;
   const pagesCount = Math.ceil(totalCount / pageSize);

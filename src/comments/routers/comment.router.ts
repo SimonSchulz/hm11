@@ -12,9 +12,16 @@ import { getCommentHandler } from "./handlers/get-comment-handler";
 import { likeStatusValidation } from "../../likes/validation/like-status.validation";
 import { putLikeStatusHandler } from "./handlers/like-status.handler";
 import { accessTokenGuard } from "../../auth/routers/guards/access.token.guard";
+import { optionalAccessTokenMiddleware } from "../../auth/routers/guards/optional-access.token.guard";
 export const commentsRouter = Router({});
 commentsRouter
-  .get("/:id", idValidation, inputValidationResultMiddleware, getCommentHandler)
+  .get(
+    "/:id",
+    optionalAccessTokenMiddleware,
+    idValidation,
+    inputValidationResultMiddleware,
+    getCommentHandler,
+  )
 
   .put(
     "/:commentId",

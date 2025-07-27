@@ -9,12 +9,13 @@ export async function getCommentHandler(
   next: NextFunction,
 ) {
   try {
+    const userId = req.userInfo?.userId;
     const id = req.params.id;
     const comment = await commentsService.findByIdOrFail(id);
     if (!comment) {
       throw new NotFoundError("Comment not found");
     }
-    const result = await mapToCommentViewModel(comment);
+    const result = await mapToCommentViewModel(comment, userId);
     res.send(result);
   } catch (e: unknown) {
     next(e);

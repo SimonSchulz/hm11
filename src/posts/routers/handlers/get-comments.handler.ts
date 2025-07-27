@@ -18,9 +18,6 @@ export async function getCommentsByPostIdHandler(
 ) {
   try {
     const userId = req.userInfo?.userId;
-    if (!userId) {
-      throw new ValidationError();
-    }
     const postId = req.params.postId;
     const post = await postService.findByIdOrFail(postId);
     if (!post) {

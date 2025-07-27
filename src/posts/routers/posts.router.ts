@@ -15,6 +15,7 @@ import { contentValidation } from "../../comments/validation/comment.input-dto.v
 import { createCommentByPostIdHandler } from "./handlers/create-comment.handler";
 import { getCommentsByPostIdHandler } from "./handlers/get-comments.handler";
 import { accessTokenGuard } from "../../auth/routers/guards/access.token.guard";
+import { optionalAccessTokenMiddleware } from "../../auth/routers/guards/optional-access.token.guard";
 
 export const postsRouter = Router({});
 
@@ -24,6 +25,7 @@ postsRouter
   .get("/:id", idValidation, inputValidationResultMiddleware, getPostHandler)
   .get(
     "/:postId/comments",
+    optionalAccessTokenMiddleware,
     postIdValidation,
     inputValidationResultMiddleware,
     getCommentsByPostIdHandler,
