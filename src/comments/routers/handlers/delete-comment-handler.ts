@@ -12,7 +12,7 @@ export async function deleteCommentHandler(
   next: NextFunction,
 ) {
   try {
-    const id = req.params.id;
+    const id = req.params.commentId;
     const comment = await commentsService.findByIdOrFail(id);
     if (!comment) {
       throw new NotFoundError("Comment not found");

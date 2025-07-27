@@ -17,7 +17,7 @@ export async function putLikeStatusHandler(
       throw new ValidationError();
     }
     const likeStatus = req.body.likeStatus;
-    const id = req.params.id;
+    const id = req.params.commentId;
     await likesService.updateLikeStatus(userId, id, likeStatus);
     res.send(HttpStatus.NoContent);
   } catch (e: unknown) {

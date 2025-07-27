@@ -8,12 +8,12 @@ import { commentsService } from "../../service/comments.service";
 import { CommentInputDto } from "../../dto/comment.input-dto";
 
 export async function updateCommentHandler(
-  req: Request<{ id: string }, {}, CommentInputDto>,
+  req: Request<{ commentId: string }, {}, CommentInputDto>,
   res: Response,
   next: NextFunction,
 ) {
   try {
-    const id = req.params.id;
+    const id = req.params.commentId;
     const comment = await commentsService.findByIdOrFail(id);
     if (!comment) {
       throw new NotFoundError("Comment not found");

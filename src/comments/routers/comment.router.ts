@@ -1,4 +1,7 @@
-import { idValidation } from "../../core/utils/params-id.validation";
+import {
+  commentIdValidation,
+  idValidation,
+} from "../../core/utils/params-id.validation";
 import { inputValidationResultMiddleware } from "../../core/utils/input-validtion-result.middleware";
 import { Router } from "express";
 import { contentValidation } from "../validation/comment.input-dto.validation";
@@ -18,25 +21,26 @@ commentsRouter
   .get("/:id", idValidation, inputValidationResultMiddleware, getCommentHandler)
 
   .put(
-    "/:id",
+    "/:commentId",
     accessTokenGuard.handle.bind(accessTokenGuard),
-    idValidation,
+    commentIdValidation,
     contentValidation,
     inputValidationResultMiddleware,
     updateCommentHandler,
   )
   .put(
-    "/:id/like-status",
+    "/:commentId/like-status",
     accessTokenGuard.handle.bind(accessTokenGuard),
+    commentIdValidation,
     likeStatusValidation,
     inputValidationResultMiddleware,
     putLikeStatusHandler,
   )
 
   .delete(
-    "/:id",
+    "/:commentId",
     accessTokenGuard.handle.bind(accessTokenGuard),
-    idValidation,
+    commentIdValidation,
     inputValidationResultMiddleware,
     deleteCommentHandler,
   );
