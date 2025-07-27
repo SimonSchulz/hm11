@@ -17,7 +17,7 @@ export const commentsRouter = Router({});
 commentsRouter
   .get(
     "/:id",
-    accessTokenGuard.handle,
+    accessTokenGuard.handle.bind(accessTokenGuard),
     idValidation,
     inputValidationResultMiddleware,
     getCommentHandler,
@@ -25,7 +25,7 @@ commentsRouter
 
   .put(
     "/:id",
-    accessTokenGuard.handle,
+    accessTokenGuard.handle.bind(accessTokenGuard),
     idValidation,
     contentValidation,
     inputValidationResultMiddleware,
@@ -33,7 +33,7 @@ commentsRouter
   )
   .put(
     "/:id/like-status",
-    accessTokenGuard.handle,
+    accessTokenGuard.handle.bind(accessTokenGuard),
     likeStatusValidation,
     inputValidationResultMiddleware,
     putLikeStatusHandler,
@@ -41,7 +41,7 @@ commentsRouter
 
   .delete(
     "/:id",
-    accessTokenGuard.handle,
+    accessTokenGuard.handle.bind(accessTokenGuard),
     idValidation,
     inputValidationResultMiddleware,
     deleteCommentHandler,
