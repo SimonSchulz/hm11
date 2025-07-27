@@ -15,13 +15,7 @@ const accessTokenGuard = container.get<AccessTokenGuard>(
 );
 export const commentsRouter = Router({});
 commentsRouter
-  .get(
-    "/:id",
-    accessTokenGuard.handle.bind(accessTokenGuard),
-    idValidation,
-    inputValidationResultMiddleware,
-    getCommentHandler,
-  )
+  .get("/:id", idValidation, inputValidationResultMiddleware, getCommentHandler)
 
   .put(
     "/:id",
