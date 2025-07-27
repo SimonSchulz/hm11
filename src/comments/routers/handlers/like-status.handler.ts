@@ -22,7 +22,7 @@ export async function putLikeStatusHandler(
     const likeStatus = req.body.likeStatus;
     const id = req.params.commentId;
     await likesService.updateLikeStatus(userId, id, likeStatus);
-    res.send(HttpStatus.NoContent);
+    res.sendStatus(HttpStatus.NoContent);
   } catch (e: unknown) {
     next(e);
   }
