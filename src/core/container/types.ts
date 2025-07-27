@@ -1,4 +1,5 @@
 import { UsersQueryRepository } from "../../user/repositories/user.query.repository";
+import { LikesRepository } from "../../likes/repositories/likes.repository";
 
 const TYPES = {
   //auth
@@ -25,6 +26,10 @@ const TYPES = {
   UsersQueryRepository: Symbol.for("UsersQueryRepository"),
   UsersController: Symbol.for("UsersController"),
   UsersService: Symbol.for("UsersService"),
+
+  //likes
+  LikesRepository: Symbol.for("LikesRepository"),
+  LikesService: Symbol.for("LikesService"),
 };
 
 export default TYPES;

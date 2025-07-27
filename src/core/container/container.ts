@@ -15,6 +15,8 @@ import { UsersService } from "../../user/domain/user.service";
 import { UsersQueryRepository } from "../../user/repositories/user.query.repository";
 import { AccessTokenGuard } from "../../auth/routers/guards/access.token.guard";
 import { AuthService } from "../../auth/domain/auth.service";
+import { LikesRepository } from "../../likes/repositories/likes.repository";
+import { LikesService } from "../../likes/domain/likes.service";
 
 const container = new Container();
 //auth
@@ -62,6 +64,16 @@ container
 container
   .bind<DeviceSessionController>(TYPES.DeviceSessionController)
   .to(DeviceSessionController)
+  .inSingletonScope();
+
+//likes
+container
+  .bind<LikesRepository>(TYPES.LikesRepository)
+  .to(LikesRepository)
+  .inSingletonScope();
+container
+  .bind<LikesService>(TYPES.LikesService)
+  .to(LikesService)
   .inSingletonScope();
 
 export default container;

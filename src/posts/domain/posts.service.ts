@@ -1,11 +1,11 @@
-import {Post} from "../types/post";
-import {PostInputDto} from "../dto/post.input-dto";
-import {PostQueryInput} from "../types/post-query.input";
-import {WithId} from "mongodb";
-import {postsRepository} from "../repositories/post.repository";
-import {blogsRepository} from "../../blogs/repositories/blog.repository";
-import {mapToBlogViewModel} from "../../blogs/routers/mappers/map-to-blog-view-model";
-import {PostInputDtoWithoutBlogId} from "../dto/post.create-by-blogId.dto";
+import { Post } from "../types/post";
+import { PostInputDto } from "../dto/post.input-dto";
+import { PostQueryInput } from "../types/post-query.input";
+import { WithId } from "mongodb";
+import { postsRepository } from "../repositories/post.repository";
+import { blogsRepository } from "../../blogs/repositories/blog.repository";
+import { mapToBlogViewModel } from "../../blogs/routers/mappers/map-to-blog-view-model";
+import { PostInputDtoWithoutBlogId } from "../dto/post.create-by-blogId.dto";
 
 export const postService = {
   async findMany(
@@ -30,14 +30,13 @@ export const postService = {
     if (blog) {
       blogName = mapToBlogViewModel(blog).name;
     }
-    let newPost = {
+    let newPost = new Post({
       title: dto.title,
       shortDescription: dto.shortDescription,
       content: dto.content,
       blogId: dto.blogId,
       blogName: blogName,
-      createdAt: new Date().toISOString(),
-    };
+    });
 
     return postsRepository.create(newPost);
   },
@@ -50,14 +49,13 @@ export const postService = {
       throw new Error("Blog not found");
     }
     let blogName = mapToBlogViewModel(blog).name;
-    let newPost = {
+    let newPost = new Post({
       title: dto.title,
       shortDescription: dto.shortDescription,
       content: dto.content,
       blogId: blogId,
       blogName: blogName,
-      createdAt: new Date().toISOString(),
-    };
+    });
 
     return postsRepository.create(newPost);
   },

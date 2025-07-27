@@ -8,13 +8,21 @@ import { getCommentHandler } from "./handlers/get-comment-handler";
 import container from "../../core/container/container";
 import { AccessTokenGuard } from "../../auth/routers/guards/access.token.guard";
 import TYPES from "../../core/container/types";
+import { likeStatusValidation } from "../../likes/validation/like-status.validation";
+import { putLikeStatusHandler } from "./handlers/like-status.handler";
 
 export const commentsRouter = Router({});
 const accessTokenGuard = container.get<AccessTokenGuard>(
   TYPES.AccessTokenGuard,
 );
 commentsRouter
-  .get("/:id", idValidation, inputValidationResultMiddleware, getCommentHandler)
+  .get(
+    "/:id",
+    accessTokenGuard.handle,
+    idValidation,
+    inputValidationResultMiddleware,
+    getCommentHandler,
+  )
 
   .put(
     "/:id",
@@ -23,6 +31,13 @@ commentsRouter
     contentValidation,
     inputValidationResultMiddleware,
     updateCommentHandler,
+  )
+  .put(
+    "/:id/like-status",
+    accessTokenGuard.handle,
+    likeStatusValidation,
+    inputValidationResultMiddleware,
+    putLikeStatusHandler,
   )
 
   .delete(

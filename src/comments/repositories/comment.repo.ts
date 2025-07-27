@@ -1,14 +1,16 @@
 import { CommentModel } from "../schemas/comment.schema"; // путь к твоей схеме комментария
 import { CommentInputDto } from "../dto/comment.input-dto";
 import { Types } from "mongoose";
+import { CommentDocument } from "../types/comment";
+import { CommentEntity } from "../dto/comment.entity";
 
 export const commentsRepository = {
-  async findByIdOrFail(id: string) {
+  async findByIdOrFail(id: string): Promise<CommentDocument | null> {
     if (!Types.ObjectId.isValid(id)) return null;
     return CommentModel.findById(id).lean();
   },
 
-  async create(newComment: any) {
+  async create(newComment: CommentEntity): Promise<CommentDocument> {
     const createdComment = await CommentModel.create(newComment);
     return createdComment.toObject();
   },

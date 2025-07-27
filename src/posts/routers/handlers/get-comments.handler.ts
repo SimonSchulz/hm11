@@ -2,7 +2,10 @@ import { NextFunction, Request, Response } from "express";
 import { postService } from "../../domain/posts.service";
 import { setSortAndPagination } from "../../../core/helpers/set-sort-and-pagination";
 import { HttpStatus } from "../../../core/types/http-statuses";
-import { NotFoundError } from "../../../core/utils/app-response-errors";
+import {
+  NotFoundError,
+  ValidationError,
+} from "../../../core/utils/app-response-errors";
 import { commentsService } from "../../../comments/service/comments.service";
 import { mapToCommentListModel } from "../../../comments/helpers/map-to-comment-list";
 import { PaginationAndSorting } from "../../../core/types/pagination-and-sorting";
@@ -14,6 +17,10 @@ export async function getCommentsByPostIdHandler(
   next: NextFunction,
 ) {
   try {
+    const userId = req.userInfo?.userId;
+    if (!userId) {
+      throw new ValidationError();
+    }
     const postId = req.params.postId;
     const post = await postService.findByIdOrFail(postId);
     if (!post) {
@@ -26,7 +33,7 @@ export async function getCommentsByPostIdHandler(
       postId,
       query,
     );
-    const result = mapToCommentListModel(items, totalCount, query);
+    const result = mapToCommentListModel(items, totalCount, query, userId);
     res.status(HttpStatus.Ok).send(result);
   } catch (e: unknown) {
     next(e);
