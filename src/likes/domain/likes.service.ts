@@ -13,7 +13,7 @@ export class LikesService {
 
   async getLikesInfo(
     targetId: string,
-    userId: string | null = null,
+    userId?: string,
   ): Promise<{
     likesCount: number;
     dislikesCount: number;

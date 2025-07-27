@@ -4,7 +4,7 @@ import { LikesService } from "../../likes/domain/likes.service";
 import TYPES from "../../core/container/types";
 
 const likesService = container.get<LikesService>(TYPES.LikesService);
-export async function mapToCommentViewModel(comment: any, userId: string) {
+export async function mapToCommentViewModel(comment: any, userId?: string) {
   const likesInfo = await likesService.getLikesInfo(
     comment._id.toString(),
     userId,

@@ -1,8 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import {
-  NotFoundError,
-  ValidationError,
-} from "../../../core/utils/app-response-errors";
+import { NotFoundError } from "../../../core/utils/app-response-errors";
 import { commentsService } from "../../service/comments.service";
 import { mapToCommentViewModel } from "../../helpers/map-to-comment-view-model";
 
@@ -12,16 +9,12 @@ export async function getCommentHandler(
   next: NextFunction,
 ) {
   try {
-    const userId = req.userInfo?.userId;
-    if (!userId) {
-      throw new ValidationError();
-    }
     const id = req.params.id;
     const comment = await commentsService.findByIdOrFail(id);
     if (!comment) {
       throw new NotFoundError("Comment not found");
     }
-    const result = await mapToCommentViewModel(comment, userId);
+    const result = await mapToCommentViewModel(comment);
     res.send(result);
   } catch (e: unknown) {
     next(e);
