@@ -30,7 +30,12 @@ export async function getCommentsByPostIdHandler(
       postId,
       query,
     );
-    const result = mapToCommentListModel(items, totalCount, query, userId);
+    const result = await mapToCommentListModel(
+      items,
+      totalCount,
+      query,
+      userId,
+    );
     res.status(HttpStatus.Ok).send(result);
   } catch (e: unknown) {
     next(e);
