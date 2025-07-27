@@ -37,9 +37,6 @@ export class LikesService {
     newStatus: LikeStatus,
   ): Promise<void> {
     const currentStatus = await this.likesRepo.getUserStatus(userId, targetId);
-    if (!currentStatus) {
-      throw new NotFoundError("comment with this id not found");
-    }
     if (currentStatus === newStatus) return;
     await this.likesRepo.setUserStatus(userId, targetId, newStatus);
   }
