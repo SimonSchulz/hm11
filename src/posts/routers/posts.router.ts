@@ -43,7 +43,6 @@ postsRouter
   )
   .post(
     "/:postId/comments",
-    accessTokenGuard.handle,
     postIdValidation,
     contentValidation,
     inputValidationResultMiddleware,
