@@ -28,7 +28,6 @@ postsRouter
   .get("/:id", idValidation, inputValidationResultMiddleware, getPostHandler)
   .get(
     "/:postId/comments",
-    accessTokenGuard.handle.bind(accessTokenGuard),
     postIdValidation,
     inputValidationResultMiddleware,
     getCommentsByPostIdHandler,
