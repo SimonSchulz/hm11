@@ -7,7 +7,6 @@ import { HttpStatus } from "../../../core/types/http-statuses";
 import container from "../../../core/container/container";
 import { LikesService } from "../../../likes/domain/likes.service";
 import TYPES from "../../../core/container/types";
-import { commentsService } from "../../service/comments.service";
 
 const likesService = container.get<LikesService>(TYPES.LikesService);
 export async function putLikeStatusHandler(
@@ -22,10 +21,6 @@ export async function putLikeStatusHandler(
     }
     const likeStatus = req.body.likeStatus;
     const id = req.params.commentId;
-    const comment = await commentsService.findByIdOrFail(id);
-    if (!comment) {
-      throw new NotFoundError("Comment not found");
-    }
     await likesService.updateLikeStatus(userId, id, likeStatus);
     res.send(HttpStatus.NoContent);
   } catch (e: unknown) {

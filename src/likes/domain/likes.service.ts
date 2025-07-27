@@ -2,6 +2,7 @@ import { injectable, inject } from "inversify";
 import { LikesRepository } from "../repositories/likes.repository";
 import { LikeStatus } from "../types/likes.type";
 import TYPES from "../../core/container/types";
+import { commentsService } from "../../comments/service/comments.service";
 import { NotFoundError } from "../../core/utils/app-response-errors";
 
 @injectable()
@@ -36,6 +37,10 @@ export class LikesService {
     targetId: string,
     newStatus: LikeStatus,
   ): Promise<void> {
+    const comment = await commentsService.findByIdOrFail(targetId);
+    if (!comment) {
+      throw new NotFoundError("Comment not found");
+    }
     const currentStatus = await this.likesRepo.getUserStatus(userId, targetId);
     if (currentStatus === newStatus) return;
     await this.likesRepo.setUserStatus(userId, targetId, newStatus);
