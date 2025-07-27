@@ -8,21 +8,17 @@ import { contentValidation } from "../validation/comment.input-dto.validation";
 import { deleteCommentHandler } from "./handlers/delete-comment-handler";
 import { updateCommentHandler } from "./handlers/update-comment-handler";
 import { getCommentHandler } from "./handlers/get-comment-handler";
-import container from "../../core/container/container";
-import { AccessTokenGuard } from "../../auth/routers/guards/access.token.guard";
-import TYPES from "../../core/container/types";
+
 import { likeStatusValidation } from "../../likes/validation/like-status.validation";
 import { putLikeStatusHandler } from "./handlers/like-status.handler";
-const accessTokenGuard = container.get<AccessTokenGuard>(
-  TYPES.AccessTokenGuard,
-);
+import { accessTokenGuard } from "../../auth/routers/guards/access.token.guard";
 export const commentsRouter = Router({});
 commentsRouter
   .get("/:id", idValidation, inputValidationResultMiddleware, getCommentHandler)
 
   .put(
     "/:commentId",
-    accessTokenGuard.handle.bind(accessTokenGuard),
+    accessTokenGuard,
     commentIdValidation,
     contentValidation,
     inputValidationResultMiddleware,
@@ -30,7 +26,7 @@ commentsRouter
   )
   .put(
     "/:commentId/like-status",
-    accessTokenGuard.handle.bind(accessTokenGuard),
+    accessTokenGuard,
     commentIdValidation,
     likeStatusValidation,
     inputValidationResultMiddleware,
@@ -39,7 +35,7 @@ commentsRouter
 
   .delete(
     "/:commentId",
-    accessTokenGuard.handle.bind(accessTokenGuard),
+    accessTokenGuard,
     commentIdValidation,
     inputValidationResultMiddleware,
     deleteCommentHandler,

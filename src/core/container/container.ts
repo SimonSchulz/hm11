@@ -13,7 +13,6 @@ import { RefreshTokenGuard } from "../../auth/routers/guards/refresh.token.guard
 import { UsersController } from "../../user/controller/user.controller";
 import { UsersService } from "../../user/domain/user.service";
 import { UsersQueryRepository } from "../../user/repositories/user.query.repository";
-import { AccessTokenGuard } from "../../auth/routers/guards/access.token.guard";
 import { AuthService } from "../../auth/domain/auth.service";
 import { LikesRepository } from "../../likes/repositories/likes.repository";
 import { LikesService } from "../../likes/domain/likes.service";
@@ -33,7 +32,6 @@ container
 container
   .bind<RefreshTokenGuard>(TYPES.RefreshTokenGuard)
   .to(RefreshTokenGuard);
-container.bind<AccessTokenGuard>(TYPES.AccessTokenGuard).to(AccessTokenGuard);
 container.bind<AuthService>(TYPES.AuthService).to(AuthService);
 //blogs
 

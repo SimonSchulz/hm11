@@ -17,20 +17,18 @@ import { requestLogMiddleware } from "../middlewares/request-log.middleware";
 import container from "../../core/container/container";
 import { RefreshTokenGuard } from "./guards/refresh.token.guard";
 import TYPES from "../../core/container/types";
-import { AccessTokenGuard } from "./guards/access.token.guard";
 import { newPasswordValidation } from "../../user/validation/new-password.validation";
 import { recoveryPasswordEmailValidation } from "../../user/validation/recovery-password-email.validation";
 import { recoveryCodeValidation } from "../../user/validation/password-recovery-code.validation";
 import { passwordRecoveryHandler } from "./handlers/password-recovery.handler";
 import { newPasswordHandler } from "./handlers/new-password.handler";
+import { accessTokenGuard } from "./guards/access.token.guard";
 
 export const authRouter = Router();
 const refreshTokenGuard = container.get<RefreshTokenGuard>(
   TYPES.RefreshTokenGuard,
 );
-const accessTokenGuard = container.get<AccessTokenGuard>(
-  TYPES.AccessTokenGuard,
-);
+
 authRouter.post(
   "/login",
   requestLogMiddleware,
@@ -62,7 +60,7 @@ authRouter.post(
   inputValidationResultMiddleware,
   resendConfirmationEmail,
 );
-authRouter.get("/me", accessTokenGuard.handle, getUserDataHandler);
+authRouter.get("/me", accessTokenGuard, getUserDataHandler);
 authRouter.post(
   "/refresh-token",
   refreshTokenGuard.handle,

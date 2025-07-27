@@ -14,14 +14,10 @@ import { deletePostHandler } from "./handlers/delete-post.handler";
 import { contentValidation } from "../../comments/validation/comment.input-dto.validation";
 import { createCommentByPostIdHandler } from "./handlers/create-comment.handler";
 import { getCommentsByPostIdHandler } from "./handlers/get-comments.handler";
-import container from "../../core/container/container";
-import TYPES from "../../core/container/types";
-import { AccessTokenGuard } from "../../auth/routers/guards/access.token.guard";
+import { accessTokenGuard } from "../../auth/routers/guards/access.token.guard";
 
 export const postsRouter = Router({});
-const accessTokenGuard = container.get<AccessTokenGuard>(
-  TYPES.AccessTokenGuard,
-);
+
 postsRouter
   .get("", getPostsHandler)
 
@@ -42,7 +38,7 @@ postsRouter
   )
   .post(
     "/:postId/comments",
-    accessTokenGuard.handle.bind(accessTokenGuard),
+    accessTokenGuard,
     postIdValidation,
     contentValidation,
     inputValidationResultMiddleware,
