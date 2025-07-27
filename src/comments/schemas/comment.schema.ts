@@ -10,4 +10,4 @@ const CommentSchema = new Schema({
   postId: { type: String, required: true },
 });
 
-export const CommentModel = model("Comment", CommentSchema);
+export const CommentModel = model("Comments", CommentSchema);

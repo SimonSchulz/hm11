@@ -16,7 +16,6 @@ export async function createCommentByPostIdHandler(
   next: NextFunction,
 ) {
   try {
-    console.log(req.params.postId);
     const postId = req.params.postId;
     const post = await postService.findByIdOrFail(postId);
     if (!post) {
@@ -25,15 +24,12 @@ export async function createCommentByPostIdHandler(
     const userInfo: RequestDataEntity | undefined = req.userInfo;
     if (!userInfo) throw new AuthorizationError();
     let comment = await commentsService.create(req.body, userInfo, postId);
-    console.log(comment);
     const commentViewModel = await mapToCommentViewModel(
       comment,
       userInfo.userId,
     );
-    console.log(commentViewModel);
     res.status(HttpStatus.Created).send(commentViewModel);
   } catch (e: unknown) {
-    console.log(e);
     next(e);
   }
 }

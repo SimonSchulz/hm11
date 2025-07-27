@@ -10,11 +10,10 @@ import { AccessTokenGuard } from "../../auth/routers/guards/access.token.guard";
 import TYPES from "../../core/container/types";
 import { likeStatusValidation } from "../../likes/validation/like-status.validation";
 import { putLikeStatusHandler } from "./handlers/like-status.handler";
-
-export const commentsRouter = Router({});
 const accessTokenGuard = container.get<AccessTokenGuard>(
   TYPES.AccessTokenGuard,
 );
+export const commentsRouter = Router({});
 commentsRouter
   .get(
     "/:id",
